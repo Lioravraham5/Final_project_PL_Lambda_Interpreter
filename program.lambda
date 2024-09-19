@@ -1,0 +1,59 @@
+# Test for factorial function using recursion
+Defun {name: factorial, arguments: (n,)}
+    (n == 0) || (n * factorial(n - 1))
+
+factorial(5)  # Expected output: 120
+
+# Test for unary operation
+Defun {name: factorial, arguments: (n,)}
+    !(!(n > 6) && (n == 5))
+factorial(5)
+
+# Test for a "while loop" using recursion
+Defun { name: sum_to_n, arguments: (n, total,) }
+    if (n == 0) {total}
+    else {sum_to_n(n - 1, total + n)}
+
+sum_to_n(10, 0)  # Expected output: 55
+
+# Test for operations
+Defun {name: sum_of_digits, arguments: (n,)}
+    if (n == 0) {False}
+    else {n % 10 + sum_of_digits(n / 10)}
+
+sum_of_digits(1234) # Expected output: 10
+
+# Test for binary operations
+Defun { name: check_positive, arguments: (x,) }
+  if (x > 0) {True}
+  else {False}
+
+check_positive(10)  # Expected output: True
+check_positive(-1)  # Expected output: False
+
+Defun { name: division, arguments: (x, y,) }
+  if (y < 0) {0}
+  else {x / y}
+
+division(10, 2)  # Expected output: 5
+
+# Test for nested lambda expressions
+(Lambd x.(Lambd y.(Lambd z. (x + y + z))))(1, 2, 3)  # Expected output: 6
+
+# Test for lambda expressions with higher-order function
+(Lambd x.(Lambd y. (x + y)))(3, sum_of_digits(983))  # Expected output: 23
+
+Defun {name: add, arguments: (x,y,z,)}
+    x+y+z
+
+# Test for higher-order function
+add((Lambd x.(Lambd y.(Lambd z. (x + y + z))))(1, 2, 3), 8, (Lambd x.(Lambd y. (x + y)))(3, sum_of_digits(983))) # Expected output: 37
+
+# Test for handling errors gracefully
+# 1. division by zero
+division(10, 0)  # Expected output: 'Error: Division by zero'
+
+# 2. function with wrong number of arguments
+Defun {name: add, arguments: (a,b,)}
+    a + b
+add(1)

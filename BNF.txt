@@ -1,0 +1,65 @@
+<program> ::= <statements> <EOF>
+
+<statements> ::= <statement> <statements>
+              | <empty>
+
+<statement> ::= <function_def>
+              | <if_statement>
+              | <expression>
+
+<function_def> ::= "Defun" "{" "name" ":" <identifier> "," "arguments" ":" <params> "}" <expression>
+
+<params> ::= "(" <param_list> ")"
+
+<param_list> ::= <identifier> "," <param_list>
+               | <empty>
+
+<if_statement> ::= "if" "(" <expression> ")" "{" <expression> "}" "else" "{" <expression> "}"
+
+<expression> ::= <unary_op>
+               | <binary_op>
+               | <integer>
+               | <boolean>
+               | <identifier>
+               | <function_call>
+               | <lambda_expr>
+               | "(" <expression> ")"
+
+<unary_op> ::= "!" <expression>
+
+<binary_op> ::= <expression> <operator> <expression>
+
+<operator> ::= <arith_op>
+             | <bool_op>
+             | <comp_op>
+
+<arith_op> ::= "+" | "-" | "*" | "/" | "%"
+
+<bool_op> ::= "&&" | "||"
+
+<comp_op> ::= "==" | "!=" | ">=" | "<=" | ">" | "<"
+
+<lambda_expr> ::= "(" "Lambd" <identifier> "."  <expression> ")"
+
+<function_call> ::= <identifier> "(" <args> ")"
+                 | <lambda_expr> "(" <args> ")"
+
+<args> ::= <expression> <args_tail>
+         | <empty>
+
+<args_tail> ::= "," <expression> <args_tail>
+             | <empty>
+
+<identifier> ::= <ID>
+
+<integer> ::= <INTEGER>
+
+<boolean> ::= "True" | "False"
+
+<ID> ::= [a-zA-Z_][a-zA-Z_0-9]*
+
+<INTEGER> ::= [-]?[0-9]+
+
+<EOF> ::= "EOF"
+
+<empty> ::=
